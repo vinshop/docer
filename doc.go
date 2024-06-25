@@ -31,7 +31,7 @@ type Doc struct {
 	Types           []*Type  `json:"types"`
 }
 
-func readJSON(input string) (*Doc, error) {
+func Read(input string) (*Doc, error) {
 	file, err := os.Open(input)
 	if err != nil {
 		return nil, err
@@ -48,7 +48,7 @@ func (d *Doc) JSON(output string) error {
 	_, err := os.Stat(output)
 	if err == nil {
 		// file exist try mergeDoc
-		doc, err := readJSON(output)
+		doc, err := Read(output)
 		if err == nil {
 			final = mergeDoc(doc, final)
 		}

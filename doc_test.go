@@ -1,13 +1,12 @@
 package doc
 
-import "testing"
+import (
+	"github.com/stretchr/testify/assert"
+	"testing"
+)
 
 func TestRead(t *testing.T) {
-	doc, err := readJSON("test.json")
-	if err != nil {
-		t.Fatal(err)
-	}
-	if doc == nil {
-		t.Fatal("doc is nil")
-	}
+	doc, err := Read("test.json")
+	assert.NoError(t, err)
+	assert.NotNil(t, doc)
 }
