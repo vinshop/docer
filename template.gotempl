@@ -1,0 +1,11 @@
+{{$doc := .}}
+# {{$doc.Name}}
+
+## Description
+{{$doc.Description}}
+
+## BaseURL
+`{{$doc.URL}}`
+
+## Endpoint
+`{{$doc.Method}} {{$doc.Endpoint}}`

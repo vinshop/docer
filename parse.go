@@ -1,13 +1,32 @@
-package doc
+package docer
 
 import (
 	"fmt"
 	"reflect"
 )
 
+type Config struct {
+	TagAsName string `json:"tag_as_name"`
+}
+
+func DefaultConfig() Config {
+	return Config{
+		TagAsName: "json",
+	}
+}
+
 type Parser struct {
+	config  Config
 	memType map[string]*Type
 	types   []*Type
+}
+
+func NewParser() *Parser {
+	return &Parser{
+		memType: make(map[string]*Type),
+		types:   make([]*Type, 0),
+		config:  DefaultConfig(),
+	}
 }
 
 func (p *Parser) parse(data any) {
@@ -18,6 +37,7 @@ func Parse(data any) *Doc {
 	p := &Parser{
 		memType: make(map[string]*Type),
 		types:   make([]*Type, 0),
+		config:  Config{TagAsName: "json"},
 	}
 	p.parse(data)
 	doc := &Doc{
@@ -54,7 +74,7 @@ func (p *Parser) parseStruct(data reflect.Type) *Type {
 	for i := 0; i < data.NumField(); i++ {
 		f := data.Field(i)
 		fmt.Println("-", data.Name()+"."+f.Name, f.Type.Kind())
-		jsonTag := f.Tag.Get("json")
+		jsonTag := f.Tag.Get(p.config.TagAsName)
 		field := &Field{
 			Name:        jsonTag,
 			Type:        "",

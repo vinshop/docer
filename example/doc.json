@@ -1,0 +1,113 @@
+{
+	"name": "Create User",
+	"description": "API to create user",
+	"url": "https://localhost:8080",
+	"endpoint": "/api/v1/user",
+	"method": "POST",
+	"headers": [
+		"Content-Type: application/json"
+	],
+	"example_body": null,
+	"success_response": null,
+	"error_response": null,
+	"types": [
+		{
+			"name": "User",
+			"display_name": "user",
+			"description": "an user",
+			"fields": [
+				{
+					"name": "id",
+					"type": "uint",
+					"required": false,
+					"ref": "",
+					"description": ""
+				},
+				{
+					"name": "username",
+					"type": "string",
+					"required": false,
+					"ref": "",
+					"description": ""
+				},
+				{
+					"name": "profile",
+					"type": "object",
+					"required": false,
+					"ref": "UserProfile",
+					"description": ""
+				},
+				{
+					"name": "pets",
+					"type": "array of object",
+					"required": false,
+					"ref": "Pet",
+					"description": ""
+				}
+			]
+		},
+		{
+			"name": "UserProfile",
+			"display_name": "",
+			"description": "",
+			"fields": [
+				{
+					"name": "fullname",
+					"type": "string",
+					"required": false,
+					"ref": "",
+					"description": ""
+				},
+				{
+					"name": "birthday",
+					"type": "string",
+					"required": false,
+					"ref": "",
+					"description": ""
+				},
+				{
+					"name": "email",
+					"type": "string",
+					"required": false,
+					"ref": "",
+					"description": ""
+				},
+				{
+					"name": "address",
+					"type": "string",
+					"required": false,
+					"ref": "",
+					"description": ""
+				}
+			]
+		},
+		{
+			"name": "Pet",
+			"display_name": "",
+			"description": "",
+			"fields": [
+				{
+					"name": "id",
+					"type": "uint",
+					"required": false,
+					"ref": "",
+					"description": ""
+				},
+				{
+					"name": "name",
+					"type": "string",
+					"required": false,
+					"ref": "",
+					"description": ""
+				},
+				{
+					"name": "type",
+					"type": "string",
+					"required": false,
+					"ref": "",
+					"description": ""
+				}
+			]
+		}
+	]
+}

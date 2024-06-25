@@ -1,4 +1,4 @@
-package doc
+package docer
 
 import (
 	"reflect"
@@ -28,6 +28,9 @@ func getNew[T any](old, new T) T {
 // mergeDoc two doc
 func mergeDoc(old, new *Doc) *Doc {
 	d := &Doc{
+		Name:            getNew(old.Name, new.Name),
+		Description:     getNew(old.Description, new.Description),
+		Endpoint:        getNew(old.Endpoint, new.Endpoint),
 		URL:             getNew(old.URL, new.URL),
 		Method:          getNew(old.Method, new.Method),
 		Headers:         getNew(old.Headers, new.Headers),

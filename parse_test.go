@@ -1,4 +1,4 @@
-package doc
+package docer
 
 import (
 	"github.com/stretchr/testify/assert"
