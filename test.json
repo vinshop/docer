@@ -1,0 +1,75 @@
+{
+	"url": "https://api.example.com/mock",
+	"method": "GET",
+	"headers": [
+		"Content-Type: application/json"
+	],
+	"example_body": {},
+	"success_response": {},
+	"error_response": null,
+	"types": [
+		{
+			"name": "mock",
+			"display_name": "",
+			"description": "",
+			"fields": [
+				{
+					"name": "id",
+					"type": "string",
+					"required": false,
+					"ref": "",
+					"description": ""
+				},
+				{
+					"name": "age",
+					"type": "int",
+					"required": false,
+					"ref": "",
+					"description": ""
+				},
+				{
+					"name": "a",
+					"type": "object",
+					"required": false,
+					"ref": "mockA",
+					"description": ""
+				},
+				{
+					"name": "bs",
+					"type": "array of object",
+					"required": false,
+					"ref": "mockB",
+					"description": ""
+				}
+			]
+		},
+		{
+			"name": "mockA",
+			"display_name": "",
+			"description": "",
+			"fields": [
+				{
+					"name": "name",
+					"type": "string",
+					"required": false,
+					"ref": "",
+					"description": ""
+				}
+			]
+		},
+		{
+			"name": "mockB",
+			"display_name": "",
+			"description": "",
+			"fields": [
+				{
+					"name": "age",
+					"type": "int",
+					"required": false,
+					"ref": "",
+					"description": ""
+				}
+			]
+		}
+	]
+}
