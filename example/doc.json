@@ -5,7 +5,8 @@
 	"endpoint": "/api/v1/user",
 	"method": "POST",
 	"headers": [
-		"Content-Type: application/json"
+		"Content-Type: application/json",
+		"Authorization: Basic {token}"
 	],
 	"curl": "curl -o",
 	"success_response": {
