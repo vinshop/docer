@@ -12,6 +12,7 @@ API to create user
 ### Headers
 ```
 Content-Type: application/json
+Authorization: Basic {token}
 ```
 ### Query parameters
   - `type` (optional, string): 

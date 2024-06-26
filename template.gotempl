@@ -24,7 +24,8 @@
 
 ### Headers
 ```
-{{range $doc.Headers}}{{.}}{{end}}
+{{range $doc.Headers}}{{.}}
+{{end -}}
 ```
 {{- end}}
 {{- if $doc.Param}}
