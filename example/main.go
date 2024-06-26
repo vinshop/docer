@@ -10,9 +10,10 @@ type UserProfile struct {
 }
 
 type Pet struct {
-	ID   uint   `json:"id"`
-	Name string `json:"name"`
-	Type string `json:"type"`
+	ID      uint         `json:"id"`
+	Name    string       `json:"name"`
+	Type    string       `json:"type"`
+	Profile *UserProfile `json:"profile"`
 }
 
 type User struct {
@@ -22,8 +23,14 @@ type User struct {
 	Pets     []*Pet       `json:"pets"`
 }
 
+type Query struct {
+	Type string `query:"type"`
+}
+
 func main() {
-	doc := docer.Parse(User{})
+	doc := docer.New()
+	doc.ParseBody(User{}, "json")
+	doc.ParseQuery(Query{}, "query")
 	if err := doc.JSON("doc.json"); err != nil {
 		panic(err)
 	}

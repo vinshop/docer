@@ -14,9 +14,23 @@ var defaultTemplate *template.Template
 
 func init() {
 	defaultTemplate = template.Must(template.New("default").Funcs(map[string]any{
-		"JSON": func(data string) string {
+		"JSON": func(data any) string {
 			res, _ := json.MarshalIndent(data, "", "\t")
 			return string(res)
+		},
+		"arr": func(data ...any) []any {
+			return data
+		},
+		"intRange": func(start, end int) []int {
+			n := end - start + 1
+			result := make([]int, n)
+			for i := 0; i < n; i++ {
+				result[i] = start + i
+			}
+			return result
+		},
+		"add": func(a, b int) int {
+			return a + b
 		},
 	}).Parse(templateStr))
 }
@@ -45,21 +59,41 @@ func (t *Type) Field(name string) *Field {
 	return nil
 }
 
-type Doc struct {
-	Name            string   `json:"name"`
-	Description     string   `json:"description"`
-	URL             string   `json:"url"`
-	Endpoint        string   `json:"endpoint"`
-	Method          string   `json:"method"`
-	Headers         []string `json:"headers"`
-	ExampleBody     any      `json:"example_body"`
-	SuccessResponse any      `json:"success_response"`
-	ErrorResponse   any      `json:"error_response"`
-	Types           []*Type  `json:"types"`
+type RequestSection struct {
+	Description string  `json:"description"`
+	Example     any     `json:"example"`
+	Types       []*Type `json:"types"`
 }
 
-func (d *Doc) Type(name string) *Type {
-	for _, t := range d.Types {
+type Doc struct {
+	Name            string          `json:"name"`
+	Description     string          `json:"description"`
+	URL             string          `json:"url"`
+	Endpoint        string          `json:"endpoint"`
+	Method          string          `json:"method"`
+	Headers         []string        `json:"headers"`
+	CURL            string          `json:"curl"`
+	SuccessResponse any             `json:"success_response"`
+	ErrorResponse   any             `json:"error_response"`
+	Body            *RequestSection `json:"body"`
+	Param           *RequestSection `json:"param"`
+	Query           *RequestSection `json:"query"`
+}
+
+func New() *Doc {
+	doc := &Doc{
+		URL:             "",
+		Method:          "",
+		Headers:         nil,
+		SuccessResponse: nil,
+		ErrorResponse:   nil,
+		Body:            nil,
+	}
+	return doc
+}
+
+func (b *RequestSection) Type(name string) *Type {
+	for _, t := range b.Types {
 		if t.Name == name {
 			return t
 		}
@@ -103,6 +137,27 @@ func (d *Doc) JSON(output string) error {
 	enc := json.NewEncoder(file)
 	enc.SetIndent("", "\t")
 	return enc.Encode(final)
+}
+
+func (d *Doc) ParseParam(param any, tag string) {
+	d.Param = &RequestSection{
+		Types: make([]*Type, 0),
+	}
+	d.Param.Types = NewParser(TagAsName(tag)).parse(param)
+}
+
+func (d *Doc) ParseQuery(query any, tag string) {
+	d.Query = &RequestSection{
+		Types: make([]*Type, 0),
+	}
+	d.Query.Types = NewParser(TagAsName(tag)).parse(query)
+}
+
+func (d *Doc) ParseBody(body any, tag string) {
+	d.Body = &RequestSection{
+		Types: make([]*Type, 0),
+	}
+	d.Body.Types = NewParser(TagAsName(tag)).parse(body)
 }
 
 func (d *Doc) Generate(output string) error {

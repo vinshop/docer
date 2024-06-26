@@ -32,12 +32,30 @@ func mergeDoc(old, new *Doc) *Doc {
 		Description:     getNew(old.Description, new.Description),
 		Endpoint:        getNew(old.Endpoint, new.Endpoint),
 		URL:             getNew(old.URL, new.URL),
+		CURL:            getNew(old.CURL, new.CURL),
 		Method:          getNew(old.Method, new.Method),
 		Headers:         getNew(old.Headers, new.Headers),
-		ExampleBody:     getNew(old.ExampleBody, new.ExampleBody),
 		SuccessResponse: getNew(old.SuccessResponse, new.SuccessResponse),
 		ErrorResponse:   getNew(old.ErrorResponse, new.ErrorResponse),
-		Types:           nil,
+		Body:            mergeRequestSection(old.Body, new.Body),
+		Param:           mergeRequestSection(old.Param, new.Param),
+		Query:           mergeRequestSection(old.Query, new.Query),
+	}
+
+	return d
+}
+
+func mergeRequestSection(old, new *RequestSection) *RequestSection {
+	if new == nil {
+		return nil
+	}
+	if old == nil {
+		return new
+	}
+	b := &RequestSection{
+		Types:       nil,
+		Description: getNew(old.Description, new.Description),
+		Example:     getNew(old.Example, new.Example),
 	}
 	mpNew := make(map[string]*Type)
 	for _, t := range new.Types {
@@ -50,10 +68,10 @@ func mergeDoc(old, new *Doc) *Doc {
 		}
 	}
 	for i := range new.Types {
-		d.Types = append(d.Types, mpNew[new.Types[i].Name])
+		b.Types = append(b.Types, mpNew[new.Types[i].Name])
 	}
 
-	return d
+	return b
 }
 
 func mergeType(old, new *Type) *Type {
