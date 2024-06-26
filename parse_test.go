@@ -1,4 +1,4 @@
-package doc
+package docer
 
 import (
 	"github.com/stretchr/testify/assert"
@@ -21,6 +21,6 @@ type mockB struct {
 }
 
 func TestParse(t *testing.T) {
-	doc := Parse(mock{})
+	doc := New(mock{})
 	assert.NoError(t, doc.JSON("test.json"))
 }

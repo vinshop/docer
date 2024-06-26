@@ -1,0 +1,79 @@
+{{$doc := .}}
+{{- define "template.Type" -}}
+{{- $sec := (index . 0)}}
+{{- $type := (index . 1)}}
+{{- $level := (index . 2)}}
+{{- range $type.Fields}}
+{{range $i := intRange 0 $level}}  {{end}}- `{{.Name}}` ({{if .Required}}required{{else}}optional{{end}}, {{.Type}}): {{.Description}}
+{{- if ne .Ref ""}}
+     {{- template "template.Type" (arr $sec ($sec.Type .Ref) (add $level 1))}}
+{{- end}}
+{{- end}}
+{{- end -}}
+# {{$doc.Name}}
+
+## Description
+{{$doc.Description}}
+
+## BaseURL
+`{{$doc.URL}}`
+
+## Endpoint
+`[{{$doc.Method}}] {{$doc.Endpoint}}`
+{{- if $doc.Headers}}
+
+### Headers
+```
+{{range $doc.Headers}}{{.}}{{end}}
+```
+{{- end}}
+{{- if $doc.Param}}
+### Parameters
+{{$doc.Param.Description}}
+{{- template "template.Type" (arr $doc.Param (index $doc.Param.Types 0) 0)}}
+{{- if $doc.Param.Example}}
+
+Example
+```json
+{{JSON $doc.Param.Example}}
+```
+{{- end}}
+{{- end}}
+{{- if $doc.Query}}
+### Query parameters
+{{- template "template.Type" (arr $doc.Query (index $doc.Query.Types 0) 0)}}
+{{- if $doc.Query.Example}}
+
+Example
+```json
+{{JSON $doc.Query.Example}}
+```
+{{- end}}
+{{- end}}
+{{- if $doc.Body}}
+### Body
+{{$doc.Body.Description}}
+{{- template "template.Type" (arr $doc.Body (index $doc.Body.Types 0) 0)}}
+{{- if $doc.Body.Example}}
+
+Example
+```json
+{{JSON $doc.Body.Example}}
+```
+{{- end}}
+{{- end}}
+
+### Response
+- Success Response
+```json
+{{JSON $doc.SuccessResponse}}
+```
+- Error Response
+```json
+{{JSON $doc.ErrorResponse}}
+```
+
+### Example
+```bash
+{{$doc.CURL}}
+```

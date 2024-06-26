@@ -1,35 +1,38 @@
-package doc
+package docer
 
 import (
 	"fmt"
 	"reflect"
 )
 
+type ConfigOption func(p *Parser)
+
+func TagAsName(tag string) ConfigOption {
+	return func(p *Parser) {
+		p.tagAsName = tag
+	}
+}
+
 type Parser struct {
-	memType map[string]*Type
-	types   []*Type
+	memType   map[string]*Type
+	types     []*Type
+	tagAsName string
 }
 
-func (p *Parser) parse(data any) {
-	p.parseStruct(reflect.TypeOf(data))
-}
-
-func Parse(data any) *Doc {
+func NewParser(ops ...ConfigOption) *Parser {
 	p := &Parser{
 		memType: make(map[string]*Type),
 		types:   make([]*Type, 0),
 	}
-	p.parse(data)
-	doc := &Doc{
-		URL:             "",
-		Method:          "",
-		Headers:         nil,
-		ExampleBody:     nil,
-		SuccessResponse: nil,
-		ErrorResponse:   nil,
-		Types:           p.types,
+	for _, op := range ops {
+		op(p)
 	}
-	return doc
+	return p
+}
+
+func (p *Parser) parse(data any) []*Type {
+	p.parseStruct(reflect.TypeOf(data))
+	return p.types
 }
 
 func (p *Parser) parseStruct(data reflect.Type) *Type {
@@ -45,6 +48,7 @@ func (p *Parser) parseStruct(data reflect.Type) *Type {
 	fmt.Println("type", data.Name(), data.Kind())
 	t := &Type{
 		Name:        data.Name(),
+		DisplayName: "",
 		Description: "",
 		Fields:      make([]*Field, 0),
 	}
@@ -54,7 +58,7 @@ func (p *Parser) parseStruct(data reflect.Type) *Type {
 	for i := 0; i < data.NumField(); i++ {
 		f := data.Field(i)
 		fmt.Println("-", data.Name()+"."+f.Name, f.Type.Kind())
-		jsonTag := f.Tag.Get("json")
+		jsonTag := f.Tag.Get(p.tagAsName)
 		field := &Field{
 			Name:        jsonTag,
 			Type:        "",
