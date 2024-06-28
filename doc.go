@@ -59,40 +59,42 @@ func (t *Type) Field(name string) *Field {
 	return nil
 }
 
-type RequestSection struct {
-	Description string  `json:"description"`
-	Example     any     `json:"example"`
-	Types       []*Type `json:"types"`
+type Example struct {
+	Name string `json:"name"`
+	Data any    `json:"data"`
+}
+
+type Collection struct {
+	Description string    `json:"description"`
+	Examples    []Example `json:"examples"`
+	Types       []*Type   `json:"types"`
 }
 
 type Doc struct {
-	Name            string          `json:"name"`
-	Description     string          `json:"description"`
-	URL             string          `json:"url"`
-	Endpoint        string          `json:"endpoint"`
-	Method          string          `json:"method"`
-	Headers         []string        `json:"headers"`
-	CURL            string          `json:"curl"`
-	SuccessResponse any             `json:"success_response"`
-	ErrorResponse   any             `json:"error_response"`
-	Body            *RequestSection `json:"body"`
-	Param           *RequestSection `json:"param"`
-	Query           *RequestSection `json:"query"`
+	Name        string      `json:"name"`
+	Description string      `json:"description"`
+	URL         string      `json:"url"`
+	Endpoint    string      `json:"endpoint"`
+	Method      string      `json:"method"`
+	Headers     []string    `json:"headers"`
+	Examples    []Example   `json:"examples"`
+	Body        *Collection `json:"body"`
+	Param       *Collection `json:"param"`
+	Query       *Collection `json:"query"`
+	Response    *Collection `json:"response"`
 }
 
 func New() *Doc {
 	doc := &Doc{
-		URL:             "",
-		Method:          "",
-		Headers:         nil,
-		SuccessResponse: nil,
-		ErrorResponse:   nil,
-		Body:            nil,
+		URL:     "",
+		Method:  "",
+		Headers: nil,
+		Body:    nil,
 	}
 	return doc
 }
 
-func (b *RequestSection) Type(name string) *Type {
+func (b *Collection) Type(name string) *Type {
 	for _, t := range b.Types {
 		if t.Name == name {
 			return t
@@ -139,22 +141,29 @@ func (d *Doc) JSON(output string) error {
 	return enc.Encode(final)
 }
 
+func (d *Doc) ParseResponse(response any, tag string) {
+	d.Response = &Collection{
+		Types: make([]*Type, 0),
+	}
+	d.Response.Types = NewParser(TagAsName(tag)).parse(response)
+}
+
 func (d *Doc) ParseParam(param any, tag string) {
-	d.Param = &RequestSection{
+	d.Param = &Collection{
 		Types: make([]*Type, 0),
 	}
 	d.Param.Types = NewParser(TagAsName(tag)).parse(param)
 }
 
 func (d *Doc) ParseQuery(query any, tag string) {
-	d.Query = &RequestSection{
+	d.Query = &Collection{
 		Types: make([]*Type, 0),
 	}
 	d.Query.Types = NewParser(TagAsName(tag)).parse(query)
 }
 
 func (d *Doc) ParseBody(body any, tag string) {
-	d.Body = &RequestSection{
+	d.Body = &Collection{
 		Types: make([]*Type, 0),
 	}
 	d.Body.Types = NewParser(TagAsName(tag)).parse(body)

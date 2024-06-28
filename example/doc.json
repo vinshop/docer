@@ -8,27 +8,25 @@
 		"Content-Type: application/json",
 		"Authorization: Basic {token}"
 	],
-	"curl": "curl -o",
-	"success_response": {
-		"meta": {
-			"message": "success",
-			"status": 200
+	"examples": [
+		{
+			"name": "Create user",
+			"data": "curl -u"
 		}
-	},
-	"error_response": {
-		"meta": {
-			"message": "[error message]",
-			"status": 400
-		}
-	},
+	],
 	"body": {
 		"description": "",
-		"example": {
-			"id": 1,
-			"pets": [],
-			"profile": {},
-			"username": "vuhk"
-		},
+		"examples": [
+			{
+				"name": "Create user",
+				"data": {
+					"id": 1,
+					"pets": [],
+					"profile": {},
+					"username": "vuhk"
+				}
+			}
+		],
 		"types": [
 			{
 				"name": "User",
@@ -140,7 +138,16 @@
 	"param": null,
 	"query": {
 		"description": "",
-		"example": "?type=student",
+		"examples": [
+			{
+				"name": "Create student",
+				"data": "?type=student"
+			},
+			{
+				"name": "Create teacher",
+				"data": "?type=teacher"
+			}
+		],
 		"types": [
 			{
 				"name": "Query",
@@ -153,6 +160,83 @@
 						"required": false,
 						"ref": "",
 						"description": ""
+					}
+				]
+			}
+		]
+	},
+	"response": {
+		"description": "Response when create user success",
+		"examples": [
+			{
+				"name": "Success Response",
+				"data": {
+					"data": "1",
+					"meta": {
+						"code": 200,
+						"message": "success",
+						"request_id": "123456"
+					}
+				}
+			},
+			{
+				"name": "Error Response",
+				"data": {
+					"meta": {
+						"code": 400,
+						"message": "error",
+						"request_id": "123456"
+					}
+				}
+			}
+		],
+		"types": [
+			{
+				"name": "Response",
+				"display_name": "",
+				"description": "",
+				"fields": [
+					{
+						"name": "meta",
+						"type": "object",
+						"required": false,
+						"ref": "ResponseMeta",
+						"description": "Metadata of response"
+					},
+					{
+						"name": "data",
+						"type": "string",
+						"required": false,
+						"ref": "",
+						"description": "UserID of created user"
+					}
+				]
+			},
+			{
+				"name": "ResponseMeta",
+				"display_name": "",
+				"description": "",
+				"fields": [
+					{
+						"name": "code",
+						"type": "int",
+						"required": false,
+						"ref": "",
+						"description": "Status code"
+					},
+					{
+						"name": "message",
+						"type": "string",
+						"required": false,
+						"ref": "",
+						"description": "Message of response"
+					},
+					{
+						"name": "request_id",
+						"type": "string",
+						"required": false,
+						"ref": "",
+						"description": "ID of request"
 					}
 				]
 			}

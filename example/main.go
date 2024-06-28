@@ -27,10 +27,22 @@ type Query struct {
 	Type string `query:"type"`
 }
 
+type ResponseMeta struct {
+	Code      int    `json:"code"`
+	Message   string `json:"message"`
+	RequestID string `json:"request_id"`
+}
+
+type Response struct {
+	Meta ResponseMeta `json:"meta"`
+	Data string       `json:"data"`
+}
+
 func main() {
 	doc := docer.New()
 	doc.ParseBody(User{}, "json")
 	doc.ParseQuery(Query{}, "query")
+	doc.ParseResponse(Response{}, "json")
 	if err := doc.JSON("doc.json"); err != nil {
 		panic(err)
 	}

@@ -17,9 +17,16 @@ Authorization: Basic {token}
 ### Query parameters
   - `type` (optional, string): 
 
-Example
+**Examples**
+
+Create student
 ```json
 "?type=student"
+```
+
+Create teacher
+```json
+"?type=teacher"
 ```
 ### Body
 
@@ -40,7 +47,9 @@ Example
       - `email` (optional, string): 
       - `address` (optional, string): 
 
-Example
+**Examples**
+
+Create user
 ```json
 {
 	"id": 1,
@@ -51,26 +60,40 @@ Example
 ```
 
 ### Response
-- Success Response
+Response when create user success
+  - `meta` (optional, object): Metadata of response
+    - `code` (optional, int): Status code
+    - `message` (optional, string): Message of response
+    - `request_id` (optional, string): ID of request
+  - `data` (optional, string): UserID of created user
+
+**Examples**
+
+Success Response
 ```json
 {
+	"data": "1",
 	"meta": {
+		"code": 200,
 		"message": "success",
-		"status": 200
-	}
-}
-```
-- Error Response
-```json
-{
-	"meta": {
-		"message": "[error message]",
-		"status": 400
+		"request_id": "123456"
 	}
 }
 ```
 
-### Example
+Error Response
+```json
+{
+	"meta": {
+		"code": 400,
+		"message": "error",
+		"request_id": "123456"
+	}
+}
+```
+### Examples
+
+Create user
 ```bash
-curl -o
+curl -u
 ```
