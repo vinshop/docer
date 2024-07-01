@@ -47,7 +47,9 @@
 {{- end}}
 {{- if $doc.Query}}
 ### Query parameters
+{{- if $doc.Query.Types}}
 {{- template "template.Type" (arr $doc.Query (index $doc.Query.Types 0) 0)}}
+{{- end}}
 {{- if $doc.Query.Examples}}
 
 **Examples**
@@ -63,7 +65,9 @@
 {{- if $doc.Body}}
 ### Body
 {{$doc.Body.Description}}
+{{- if $doc.Body.Types}}
 {{- template "template.Type" (arr $doc.Body (index $doc.Body.Types 0) 0)}}
+{{- end}}
 {{- if $doc.Body.Examples}}
 
 **Examples**
@@ -77,9 +81,12 @@
 {{- end}}
 {{- end}}
 
+{{- if $doc.Response}}
 ### Response
 {{$doc.Response.Description}}
+{{- if $doc.Response.Types}}
 {{- template "template.Type" (arr $doc.Response (index $doc.Response.Types 0) 0)}}
+{{- end}}
 {{- if $doc.Response.Examples}}
 
 **Examples**
@@ -89,6 +96,7 @@
 ```json
 {{JSON .Data}}
 ```
+{{- end}}
 {{- end}}
 {{- end}}
 
