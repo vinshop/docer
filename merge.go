@@ -28,34 +28,33 @@ func getNew[T any](old, new T) T {
 // mergeDoc two doc
 func mergeDoc(old, new *Doc) *Doc {
 	d := &Doc{
-		Name:            getNew(old.Name, new.Name),
-		Description:     getNew(old.Description, new.Description),
-		Endpoint:        getNew(old.Endpoint, new.Endpoint),
-		URL:             getNew(old.URL, new.URL),
-		CURL:            getNew(old.CURL, new.CURL),
-		Method:          getNew(old.Method, new.Method),
-		Headers:         getNew(old.Headers, new.Headers),
-		SuccessResponse: getNew(old.SuccessResponse, new.SuccessResponse),
-		ErrorResponse:   getNew(old.ErrorResponse, new.ErrorResponse),
-		Body:            mergeRequestSection(old.Body, new.Body),
-		Param:           mergeRequestSection(old.Param, new.Param),
-		Query:           mergeRequestSection(old.Query, new.Query),
+		Name:        getNew(old.Name, new.Name),
+		Description: getNew(old.Description, new.Description),
+		Endpoint:    getNew(old.Endpoint, new.Endpoint),
+		URL:         getNew(old.URL, new.URL),
+		Method:      getNew(old.Method, new.Method),
+		Headers:     getNew(old.Headers, new.Headers),
+		Examples:    getNew(old.Examples, new.Examples),
+		Body:        mergeRequestSection(old.Body, new.Body),
+		Param:       mergeRequestSection(old.Param, new.Param),
+		Query:       mergeRequestSection(old.Query, new.Query),
+		Response:    mergeRequestSection(old.Response, new.Response),
 	}
 
 	return d
 }
 
-func mergeRequestSection(old, new *RequestSection) *RequestSection {
+func mergeRequestSection(old, new *Collection) *Collection {
 	if new == nil {
 		return nil
 	}
 	if old == nil {
 		return new
 	}
-	b := &RequestSection{
+	b := &Collection{
 		Types:       nil,
 		Description: getNew(old.Description, new.Description),
-		Example:     getNew(old.Example, new.Example),
+		Examples:    getNew(old.Examples, new.Examples),
 	}
 	mpNew := make(map[string]*Type)
 	for _, t := range new.Types {
