@@ -1,245 +1,245 @@
 {
-	"name": "Create User",
-	"description": "API to create user",
-	"url": "https://localhost:8080",
-	"endpoint": "/api/v1/user",
-	"method": "POST",
-	"headers": [
-		"Content-Type: application/json",
-		"Authorization: Basic {token}"
-	],
-	"examples": [
-		{
-			"name": "Create user",
-			"data": "curl -u"
-		}
-	],
-	"body": {
-		"description": "",
-		"examples": [
-			{
-				"name": "Create user",
-				"data": {
-					"id": 1,
-					"pets": [],
-					"profile": {},
-					"username": "vuhk"
-				}
-			}
-		],
-		"types": [
-			{
-				"name": "User",
-				"display_name": "User DTO",
-				"description": "",
-				"fields": [
-					{
-						"name": "id",
-						"type": "uint",
-						"required": false,
-						"ref": "",
-						"description": "ID of user"
-					},
-					{
-						"name": "username",
-						"type": "string",
-						"required": true,
-						"ref": "",
-						"description": "Username of user"
-					},
-					{
-						"name": "profile",
-						"type": "object",
-						"required": false,
-						"ref": "UserProfile",
-						"description": "Profile of user"
-					},
-					{
-						"name": "pets",
-						"type": "array of object",
-						"required": false,
-						"ref": "Pet",
-						"description": "List of pets that user has"
-					}
-				]
-			},
-			{
-				"name": "UserProfile",
-				"display_name": "User Profile DTO",
-				"description": "",
-				"fields": [
-					{
-						"name": "fullname",
-						"type": "string",
-						"required": false,
-						"ref": "",
-						"description": ""
-					},
-					{
-						"name": "birthday",
-						"type": "string",
-						"required": false,
-						"ref": "",
-						"description": ""
-					},
-					{
-						"name": "email",
-						"type": "string",
-						"required": false,
-						"ref": "",
-						"description": ""
-					},
-					{
-						"name": "address",
-						"type": "string",
-						"required": false,
-						"ref": "",
-						"description": ""
-					}
-				]
-			},
-			{
-				"name": "Pet",
-				"display_name": "Pet DTO",
-				"description": "",
-				"fields": [
-					{
-						"name": "id",
-						"type": "uint",
-						"required": false,
-						"ref": "",
-						"description": ""
-					},
-					{
-						"name": "name",
-						"type": "string",
-						"required": false,
-						"ref": "",
-						"description": ""
-					},
-					{
-						"name": "type",
-						"type": "string",
-						"required": false,
-						"ref": "",
-						"description": ""
-					},
-					{
-						"name": "profile",
-						"type": "object",
-						"required": false,
-						"ref": "UserProfile",
-						"description": ""
-					}
-				]
-			}
-		]
-	},
-	"param": null,
-	"query": {
-		"description": "",
-		"examples": [
-			{
-				"name": "Create student",
-				"data": "?type=student"
-			},
-			{
-				"name": "Create teacher",
-				"data": "?type=teacher"
-			}
-		],
-		"types": [
-			{
-				"name": "Query",
-				"display_name": "",
-				"description": "",
-				"fields": [
-					{
-						"name": "type",
-						"type": "string",
-						"required": false,
-						"ref": "",
-						"description": ""
-					}
-				]
-			}
-		]
-	},
-	"response": {
-		"description": "Response when create user success",
-		"examples": [
-			{
-				"name": "Success Response",
-				"data": {
-					"data": "1",
-					"meta": {
-						"code": 200,
-						"message": "success",
-						"request_id": "123456"
-					}
-				}
-			},
-			{
-				"name": "Error Response",
-				"data": {
-					"meta": {
-						"code": 400,
-						"message": "error",
-						"request_id": "123456"
-					}
-				}
-			}
-		],
-		"types": [
-			{
-				"name": "Response",
-				"display_name": "",
-				"description": "",
-				"fields": [
-					{
-						"name": "meta",
-						"type": "object",
-						"required": false,
-						"ref": "ResponseMeta",
-						"description": "Metadata of response"
-					},
-					{
-						"name": "data",
-						"type": "string",
-						"required": false,
-						"ref": "",
-						"description": "UserID of created user"
-					}
-				]
-			},
-			{
-				"name": "ResponseMeta",
-				"display_name": "",
-				"description": "",
-				"fields": [
-					{
-						"name": "code",
-						"type": "int",
-						"required": false,
-						"ref": "",
-						"description": "Status code"
-					},
-					{
-						"name": "message",
-						"type": "string",
-						"required": false,
-						"ref": "",
-						"description": "Message of response"
-					},
-					{
-						"name": "request_id",
-						"type": "string",
-						"required": false,
-						"ref": "",
-						"description": "ID of request"
-					}
-				]
-			}
-		]
-	}
+    "name": "Create User",
+    "description": "API to create user",
+    "url": "https://localhost:8080",
+    "endpoint": "/api/v1/user",
+    "method": "POST",
+    "headers": [
+        "Content-Type: application/json",
+        "Authorization: Basic {token}"
+    ],
+    "examples": [
+        {
+            "name": "Create user",
+            "data": "curl -u"
+        }
+    ],
+    "body": {
+        "description": "",
+        "examples": [
+            {
+                "name": "Create user",
+                "data": {
+                    "id": 1,
+                    "pets": [],
+                    "profile": {},
+                    "username": "vuhk"
+                }
+            }
+        ],
+        "types": [
+            {
+                "name": "User",
+                "display_name": "User DTO",
+                "description": "",
+                "fields": [
+                    {
+                        "name": "id",
+                        "type": "uint",
+                        "required": false,
+                        "ref": "",
+                        "description": "ID of user"
+                    },
+                    {
+                        "name": "username",
+                        "type": "string",
+                        "required": true,
+                        "ref": "",
+                        "description": "Username of user"
+                    },
+                    {
+                        "name": "profile",
+                        "type": "object",
+                        "required": false,
+                        "ref": "UserProfile",
+                        "description": "Profile of user"
+                    },
+                    {
+                        "name": "pets",
+                        "type": "array of object",
+                        "required": false,
+                        "ref": "Pet",
+                        "description": "List of pets that user has"
+                    }
+                ]
+            },
+            {
+                "name": "UserProfile",
+                "display_name": "User Profile DTO",
+                "description": "",
+                "fields": [
+                    {
+                        "name": "fullname",
+                        "type": "string",
+                        "required": false,
+                        "ref": "",
+                        "description": ""
+                    },
+                    {
+                        "name": "birthday",
+                        "type": "string",
+                        "required": false,
+                        "ref": "",
+                        "description": ""
+                    },
+                    {
+                        "name": "email",
+                        "type": "string",
+                        "required": false,
+                        "ref": "",
+                        "description": ""
+                    },
+                    {
+                        "name": "address",
+                        "type": "string",
+                        "required": false,
+                        "ref": "",
+                        "description": ""
+                    }
+                ]
+            },
+            {
+                "name": "Pet",
+                "display_name": "Pet DTO",
+                "description": "",
+                "fields": [
+                    {
+                        "name": "id",
+                        "type": "uint",
+                        "required": false,
+                        "ref": "",
+                        "description": ""
+                    },
+                    {
+                        "name": "name",
+                        "type": "string",
+                        "required": false,
+                        "ref": "",
+                        "description": ""
+                    },
+                    {
+                        "name": "type",
+                        "type": "string",
+                        "required": false,
+                        "ref": "",
+                        "description": ""
+                    },
+                    {
+                        "name": "profile",
+                        "type": "object",
+                        "required": false,
+                        "ref": "UserProfile",
+                        "description": ""
+                    }
+                ]
+            }
+        ]
+    },
+    "param": null,
+    "query": {
+        "description": "",
+        "examples": [
+            {
+                "name": "Create student",
+                "data": "?type=student"
+            },
+            {
+                "name": "Create teacher",
+                "data": "?type=teacher"
+            }
+        ],
+        "types": [
+            {
+                "name": "Query",
+                "display_name": "",
+                "description": "",
+                "fields": [
+                    {
+                        "name": "type",
+                        "type": "string",
+                        "required": false,
+                        "ref": "",
+                        "description": ""
+                    }
+                ]
+            }
+        ]
+    },
+    "response": {
+        "description": "Response when create user success",
+        "examples": [
+            {
+                "name": "Success Response",
+                "data": {
+                    "data": "1",
+                    "meta": {
+                        "code": 200,
+                        "message": "success",
+                        "request_id": "123456"
+                    }
+                }
+            },
+            {
+                "name": "Error Response",
+                "data": {
+                    "meta": {
+                        "code": 400,
+                        "message": "error",
+                        "request_id": "123456"
+                    }
+                }
+            }
+        ],
+        "types": [
+            {
+                "name": "Response",
+                "display_name": "",
+                "description": "",
+                "fields": [
+                    {
+                        "name": "meta",
+                        "type": "object",
+                        "required": false,
+                        "ref": "ResponseMeta",
+                        "description": "Metadata of response"
+                    },
+                    {
+                        "name": "data",
+                        "type": "string",
+                        "required": false,
+                        "ref": "",
+                        "description": "UserID of created user"
+                    }
+                ]
+            },
+            {
+                "name": "ResponseMeta",
+                "display_name": "",
+                "description": "",
+                "fields": [
+                    {
+                        "name": "code",
+                        "type": "int",
+                        "required": false,
+                        "ref": "",
+                        "description": "Status code"
+                    },
+                    {
+                        "name": "message",
+                        "type": "string",
+                        "required": false,
+                        "ref": "",
+                        "description": "Message of response"
+                    },
+                    {
+                        "name": "request_id",
+                        "type": "string",
+                        "required": false,
+                        "ref": "",
+                        "description": "ID of request"
+                    }
+                ]
+            }
+        ]
+    }
 }

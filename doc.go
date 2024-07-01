@@ -15,7 +15,7 @@ var defaultTemplate *template.Template
 func init() {
 	defaultTemplate = template.Must(template.New("default").Funcs(map[string]any{
 		"JSON": func(data any) string {
-			res, _ := json.MarshalIndent(data, "", "\t")
+			res, _ := json.MarshalIndent(data, "", "    ")
 			return string(res)
 		},
 		"arr": func(data ...any) []any {
@@ -137,36 +137,49 @@ func (d *Doc) JSON(output string) error {
 	}
 	defer file.Close()
 	enc := json.NewEncoder(file)
-	enc.SetIndent("", "\t")
+	enc.SetIndent("", "    ")
 	return enc.Encode(final)
 }
 
-func (d *Doc) ParseResponse(response any, tag string) {
+func (d *Doc) HasResponse(response any, tag string) *Doc {
 	d.Response = &Collection{
-		Types: make([]*Type, 0),
+		Types:    make([]*Type, 0),
+		Examples: make([]Example, 0),
 	}
-	d.Response.Types = NewParser(TagAsName(tag)).parse(response)
+	if response != nil {
+		d.Response.Types = NewParser(TagAsName(tag)).parse(response)
+	}
+	return d
 }
 
-func (d *Doc) ParseParam(param any, tag string) {
+func (d *Doc) HasParam(param any, tag string) *Doc {
 	d.Param = &Collection{
 		Types: make([]*Type, 0),
 	}
-	d.Param.Types = NewParser(TagAsName(tag)).parse(param)
+	if param != nil {
+		d.Param.Types = NewParser(TagAsName(tag)).parse(param)
+	}
+	return d
 }
 
-func (d *Doc) ParseQuery(query any, tag string) {
+func (d *Doc) HasQuery(query any, tag string) *Doc {
 	d.Query = &Collection{
 		Types: make([]*Type, 0),
 	}
-	d.Query.Types = NewParser(TagAsName(tag)).parse(query)
+	if query == nil {
+		d.Query.Types = NewParser(TagAsName(tag)).parse(query)
+	}
+	return d
 }
 
-func (d *Doc) ParseBody(body any, tag string) {
+func (d *Doc) HasBody(body any, tag string) *Doc {
 	d.Body = &Collection{
 		Types: make([]*Type, 0),
 	}
-	d.Body.Types = NewParser(TagAsName(tag)).parse(body)
+	if body != nil {
+		d.Body.Types = NewParser(TagAsName(tag)).parse(body)
+	}
+	return d
 }
 
 func (d *Doc) Generate(output string) error {

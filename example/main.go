@@ -40,9 +40,9 @@ type Response struct {
 
 func main() {
 	doc := docer.New()
-	doc.ParseBody(User{}, "json")
-	doc.ParseQuery(Query{}, "query")
-	doc.ParseResponse(Response{}, "json")
+	doc.HasBody(User{}, "json")
+	doc.HasQuery(Query{}, "query")
+	doc.HasResponse(Response{}, "json")
 	if err := doc.JSON("doc.json"); err != nil {
 		panic(err)
 	}

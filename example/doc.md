@@ -52,13 +52,12 @@ Create teacher
 Create user
 ```json
 {
-	"id": 1,
-	"pets": [],
-	"profile": {},
-	"username": "vuhk"
+    "id": 1,
+    "pets": [],
+    "profile": {},
+    "username": "vuhk"
 }
 ```
-
 ### Response
 Response when create user success
   - `meta` (optional, object): Metadata of response
@@ -72,23 +71,23 @@ Response when create user success
 Success Response
 ```json
 {
-	"data": "1",
-	"meta": {
-		"code": 200,
-		"message": "success",
-		"request_id": "123456"
-	}
+    "data": "1",
+    "meta": {
+        "code": 200,
+        "message": "success",
+        "request_id": "123456"
+    }
 }
 ```
 
 Error Response
 ```json
 {
-	"meta": {
-		"code": 400,
-		"message": "error",
-		"request_id": "123456"
-	}
+    "meta": {
+        "code": 400,
+        "message": "error",
+        "request_id": "123456"
+    }
 }
 ```
 ### Examples
